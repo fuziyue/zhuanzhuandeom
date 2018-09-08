@@ -1,0 +1,11 @@
+<!--pages/details/details.wxml-->
+<view>
+    <view class="details">
+        <image src='../../images/jiantou.png' bindtap='pathBack'></image><text>我是详情页的内容</text>
+    </view>
+    <view class="content">
+          <view class="title">{{title}}</view>
+          <image src='{{img}}'></image>
+          <view class="info">{{content}}</view>
+    </view>
+</view>

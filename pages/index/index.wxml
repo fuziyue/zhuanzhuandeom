@@ -1,0 +1,92 @@
+<!--index.wxml-->
+<view class="container">
+    <view class="topBar">
+        <view>转转二手交易</view>
+    </view>
+    <view class="box">
+        <view class="title">
+            <view>
+                <text class="{{titleActive?'active':''}}" 
+                bindtap='changeActive' data-active="{{titleActive}}"> 卖二手</text>
+            </view>
+            <view>
+                <text class="{{titleActive?'':'active'}}" 
+                bindtap='changeActive' data-active="{{!titleActive}}">讨好货</text>
+            </view>
+        </view>
+        <view class="content">
+            <view class="maiContent" wx:if="{{titleActive}}">
+                <view class="maiContentBanner">
+                    <view>
+                        <image src='../../images/ershouhuanqian.png'></image>
+                        <text>二手换取</text>
+                    </view>
+                    <view>
+                        <image src='../../images/jiushoujihuanqian.png'></image>
+                        <text>旧手机换钱</text>
+                    </view>
+                    <view>
+                        <image src='../../images/tushusumai.png'></image>
+                        <text>图书速卖</text>
+                    </view>
+                    <view>
+                        <image src='../../images/jiuyihuishou.png'></image>
+                        <text>旧衣回收</text>
+                    </view>
+                </view>
+                <view class='swiper-parent'>
+                    <swiper  autoplay="{{true}}" interval="{{4000}}" duration="{{1000}}" circular="{{true}}" >
+                          <block wx:for="{{imgUrls}}" wx:key="{{index}}">
+                              <swiper-item>
+                                <image src="{{item}}" class="slide-image"/>
+                              </swiper-item>
+                          </block>
+                      </swiper>
+                </view>
+                <view class='content1'>
+                    <view class="title">1元数码</view>
+                    <view class='content-text'>
+                        <view class='text-left'>
+                            <image src='../../images/shop/shop1.png' class="img"></image>
+                        </view>
+                        <view class='text-right'>
+                            <text class='h2'>数码产品1元起购</text>
+                            <text class='h3'>数据线充电器耳机</text>
+                            <view class='suer'>
+                               <text>1元起购 还包邮</text>
+                               <button class='btn'>马上抢</button>
+                            </view>
+                        </view>
+                    </view>
+                 </view>
+         
+                <view class='zhuanquan'>
+                    <view class="title">
+                          <text>转转圈</text>
+                          <text>和行家一起玩耍</text>
+                    </view>
+                    <swiper display-multiple-items="2">
+                        <block wx:for="{{zhuanInfo}}" wx:key="{{index}}">
+                            <swiper-item class="item" bindtap="getData" data-item="{{item}}">
+                                <image src="{{item.image}}" class="img"/>
+                                <view class='text'>
+                                      <text>{{item.title}}</text>
+                                      <text>"人气216.万人，昨日宝贝+198"</text>
+                                </view>
+                            </swiper-item>
+                        </block>
+                    </swiper>
+              </view>
+              <view class='lookPerson'>
+                  <text class='{{lookPersonActiveShow?"active":""}}' 
+                        bindtap='setActive' data-active="{{lookPersonActiveShow}}">看推荐</text>
+                  <text class='{{lookPersonActiveShow?"":"active"}}' 
+                        bindtap='setActive'data-active="{{!lookPersonActiveShow}}">附近逛</text>
+              </view>
+            
+            
+            </view>
+            <view class="taoContent" wx:if="{{!titleActive}}" >套</view>
+        </view>
+    </view>
+</view>

@@ -1,0 +1,310 @@
+
+
+
+
+
+
+					转转开放
+
+
+		1.  设置app.json里面的配置，这些是设置全局的样式，每个页面都会有的样式
+			｛
+				"window":{对小程序的window的样式内容设置},
+				"pages"：[设置一共有多少页面],
+				"tabBar":{对底部导航的设置，或者说是路由的设置}
+			 ｝
+				https://developers.weixin.qq.com/miniprogram/dev/quickstart/basic/file.html
+
+		
+		2. 小程序给我们提供了自定义头部导航的方法，在app.josn里面设置：
+			｛
+				"window":{
+					"navigationStyle":"custom"  //这样头部导航就没有任何东西了，需要我们自己在每一个页面里面自己设置
+				}
+			 ｝
+
+
+		转转二手交易采用自定义window
+
+
+
+		3.  转转二手交易一共三个页面，所以在app.json里面的pages里面设置：
+			
+			｛
+				"pages":[
+    
+					"pages/index/index",
+    
+					"pages/fabu/fabu",
+    
+					"pages/myInfo/myInfo"
+  
+				 ]
+			 ｝
+			确定时，小程序会自动在pages文件夹里面生产三个子文件夹，分别是			index,fabu,myInfo
+
+		4.  设置底部的导航，并且能跳到相应的页面，在app.json文件的tabBar里面设置：
+			｛
+			     "tabBar": {
+  
+			          "list": [{
+      
+				     "pagePath": "pages/index/index",
+      							     "text": "首页",
+      
+				     "iconPath": "images/index.png",
+      							     "selectedIconPath": "images/index-active.png"
+},
+
+               			   {
+      
+				     "pagePath": "pages/fabu/fabu",
+     
+				     "text": "买二手",
+      
+				     "iconPath": "images/fabu.png",
+      
+				     "selectedIconPath": "images/fabu.png"
+},
+   
+				   {
+      
+				     "pagePath": "pages/myInfo/myInfo",
+      
+				     "text": "我的",
+      
+				     "iconPath": "images/my.png",
+      
+				     "selectedIconPath": "images/my-active.png"
+}
+				   ],
+    
+				   "color":"#282828",
+    
+				   "selectedColor":"#d6796a",
+    
+				   "backgroundColor":"#fff"
+  
+			      }
+			 ｝
+
+			现在底部导航和跳转完成，要开始一个一个页面的写代码
+
+
+
+
+		5. 首页页面的设置，每一个页面都放在相应的文件里面，里面有四个文件
+			1. 以 .json结尾的文件 : 对当前页面的window进行设置的文件，只有一个对象，				就代表window
+			2. 以 .wxml结尾的文件 ：对页面的结果进行设置的，类似html
+			3. 以 .js结尾的文件   : 放页面里面要用的数据，页面里面要用到的函数
+			4. 以 .wxss结尾的文件 ：对页面的设置的样式
+
+
+			
+			小程序里面封装好了一些组件，这些组件就相当于html里面的各种标签
+				比如：
+					<view></view>     => <div></div>
+					<text></text>     => <span></span>
+					<image></image>   => <img />
+					
+
+			首页结果设置：
+				1. 先设置首页的window
+					<view class="topBar">
+  样式固定定位,设置样式      
+						<view>转转二手交易</view>
+    
+					</view>
+
+				2. 弄清楚小程序里面的长度单位rpx:
+					rpx是一个相对单位，它会根据可视区的宽度自己计算的，采用					浮点数的计算方式
+					
+					在iPhone里面  1px = 2rpx,最简单操作，在手机里面因为像素					比的存在，所以在实际375px里面全屏的页面是750px,那么就把                                        设计图换成750px,那么实际量的大小是多少，就写多少rpx
+
+				
+				3. 转转页面的tab切换：
+				    <view class="title">
+            
+				       <view>
+                					   					   <text class="{{titleActive?'active':''}} 						                 bindtap='changeActive'> 
+						卖二手
+					   </text>
+            
+				       </view>
+            
+				       <view>
+                					   					   <text class="{{titleActive?'':'active'}}" 							bindtap='changeActive'>
+						 讨好货
+					   </text>
+            				       					</view>
+        
+				   </view>
+
+					在页面里面当要使用变量或者跟js有关时，用插值{{}}表达式
+
+
+					class="{{titleActive?'':'active'}} 插值里面是一个三目运						算，titleActive结果为true时，三目运算结果为'',运算结果为						false,三目运算为'active'
+
+					
+					bindtap='changeActive':给这个元素定义一个点击事件，事件					        触发时，调用changeActive，changeActive函数写在js文件里面
+					
+					   const app = getApp()
+					   
+
+Page({
+  
+					     data: {
+      titleActive:true
+  },
+  
+					     //事件处理函数
+  
+					     changeActive(){
+      
+					         this.setData({
+        								                     titleActive: !this.data.titleActive
+      
+					         })
+  
+                                              }
+
+					   })
+
+
+
+				使用 bind 开头的事件绑定，这种绑定不会阻止冒泡事件向上冒泡
+				使用 catch 开头的事件绑定，这种绑定可以阻止冒泡事件向上冒泡
+					
+
+
+					touchstart	手指触摸动作开始
+					touchmove	手指触摸后移动
+					touchcancel	手指触摸动作被打断，如来电提醒，弹窗
+					touchend	手指触摸动作结束
+					tap	手指触摸后马上离开
+					longtap	手指触摸后，超过350ms再离开
+
+
+
+
+
+				在
+
+Page里面data的值，在其他方法里面通过this.data去获取，
+				在其他方法里面想改变data里面的值，需要使用this.setData({
+})
+				｛｝里面写的就是要改变的数据和值
+ 
+
+
+
+				
+
+				
+				wx:if="{{true/false}}"  是否要渲染该元素 ==》 与v-if一样
+
+					<view wx:if="{{true}}">  显示这个元素  </view>
+				wx:for={{数组}}
+					<view wx:for="{{list}}">
+						{{item}}{{index}}
+					</view>
+					wx:for和v-for的区别，在插值里面只写一个数组，其他不写，
+					在里面会默认有item,表示数组里面的每一项，index默认表示每					个数据的索引
+
+
+
+
+
+				微新获取后台数据，小程序不能使用jsonp获取数据，但是小程序的服务器					可以跨域获取数据
+					获取数据api：
+	
+			 wx.request({
+      
+				url: 'http://127.0.0.1/getPics.php',
+    //地址  
+				method:'GET',
+                           //传送方式
+				data: 'cpage=2',
+                        //参数
+				header: {                               // 设置请求头
+					
+//设置参数内容类型为x-www-form-urlencoded
+        					'content-type': 'application/x-www-form-urlencoded',
+        
+					'Accept': 'application/json'
+     
+				},
+      
+				success: function (res) {
+          //数据请求成功后的回调函数      
+					console.log(res.data)
+      
+				}
+    
+			})
+			 	
+
+
+
+
+			新创建一个新的页面，用来展示点击内容的详情内容
+			在pages里面新建一个文件夹：details
+
+
+			因为在tabBar里面没有设置details，所以要跳转到details，需要用小程序的一个			接口
+				wx.navigateTo({
+      
+					url: '../details/details?title='+item.title+'&img='+item.image+'&content='+item.content
+    
+				})  //？号后面是传到这个页面的参数
+
+
+
+			接收这个参数需要在details页面的生命周期里面获取
+
+			   onLoad: function (options) {
+      
+				     this.setData({
+        
+ 						path:options.path
+      
+				     })
+ 
+			   }    //options里面有传过来的所有参数，把传过来的数据放到data里面
+				
+
+
+			把传送过来的数据渲染到details里面
+
+
+			
+			点击details里面的事件调回原来的页面，通过小程序apiwx.navigateBack返回：
+
+
+				wx.navigateBack({
+        
+					delta: 1
+     // 默认的值   
+				})  返回上一个跳转的页面
+
+
+
+				
+				
+		
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+

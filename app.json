@@ -1,0 +1,40 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/fabu/fabu",
+    "pages/myInfo/myInfo",
+    "pages/details/details"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ff5555",
+    "navigationBarTitleText": "转转二手交易网",
+    "navigationBarTextStyle": "#f5e2dc",
+    "navigationStyle": "custom"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/index.png",
+        "selectedIconPath": "images/index-active.png"
+      },
+      {
+        "pagePath": "pages/fabu/fabu",
+        "text": "买二手",
+        "iconPath": "images/fabu.png",
+        "selectedIconPath": "images/fabu.png"
+      },
+      {
+        "pagePath": "pages/myInfo/myInfo",
+        "text": "我的",
+        "iconPath": "images/my.png",
+        "selectedIconPath": "images/my-active.png"
+      }
+    ],
+    "color": "#282828",
+    "selectedColor": "#d6796a",
+    "backgroundColor": "#fff"
+  }
+}
